@@ -4,9 +4,11 @@
 from tespit.okuyucu import csv_oku
 from tespit import veritabani
 from tespit.kurallar import tum_kurallari_calistir  # Yeni: kurallar
+from tespit.rapor import metin_raporu, rapor_yaz  # Yeni: rapor
 
 CSV_YOLU = "veri/okutmalar.csv"
 DB_YOLU = "veri/girisler.db"
+RAPOR_YOLU = "veri/rapor.txt"
 
 
 def main():
@@ -20,9 +22,10 @@ def main():
     alarmlar = tum_kurallari_calistir(baglanti)  # Bütün kuralları çalıştır
     baglanti.close()
 
-    print(f"{len(alarmlar)} alarm bulundu:")
-    for a in alarmlar:
-        print(f"[{a['kural']}] {a['kart_id']} - {a['zaman']} - {a['detay']}")
+    rapor = metin_raporu(alarmlar)  # Alarmlardan metin raporu üret
+    print(rapor)  # Ekrana bas
+    rapor_yaz(rapor, RAPOR_YOLU)  # Aynı raporu dosyaya da yaz
+    print(f"\nRapor kaydedildi: {RAPOR_YOLU}")
 
 
 if __name__ == "__main__":
