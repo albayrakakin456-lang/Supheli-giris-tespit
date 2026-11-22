@@ -20,6 +20,7 @@ def main():
     print(f"{len(okutmalar)} okutma veritabanına yazıldı, {hatali} satır hatalıydı.\n")
 
     alarmlar = tum_kurallari_calistir(baglanti)  # Bütün kuralları çalıştır
+    veritabani.alarmlari_yaz(baglanti, alarmlar)  # Yeni: alarmları veritabanına yaz (panel okuyacak)
     baglanti.close()
 
     rapor = metin_raporu(alarmlar)  # Alarmlardan metin raporu üret
