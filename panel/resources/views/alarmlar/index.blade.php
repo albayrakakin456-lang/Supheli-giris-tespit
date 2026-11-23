@@ -14,9 +14,21 @@
         table { width: 100%; border-collapse: collapse; }
         td { padding: .5rem 1rem; border-top: 1px solid #eee; font-size: .9rem; }
         .kural { font-weight: 600; white-space: nowrap; }
+        .ust { display: flex; justify-content: space-between; align-items: center; font-size: .9rem; color: #555; }
+        .ust button { cursor: pointer; }
     </style>
 </head>
 <body>
+    {{-- Giriş yapan kullanıcı, rolü ve çıkış düğmesi --}}
+    <div class="ust">
+        <span>{{ session('kullanici.kullanici_adi') }} ({{ implode(', ', array_intersect(session('kullanici.roller', []), ['guvenlik_gorevlisi', 'yonetici'])) }})</span>
+        {{-- Çıkış bir form: POST + @csrf (başka siteler seni zorla çıkış yaptıramasın) --}}
+        <form method="POST" action="/cikis">
+            @csrf
+            <button type="submit">Çıkış yap</button>
+        </form>
+    </div>
+
     <h1>Şüpheli Girişler</h1>
     <p class="ozet">{{ $toplam }} alarm, {{ $gruplar->count() }} kart</p>
 

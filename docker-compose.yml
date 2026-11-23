@@ -1,0 +1,30 @@
+# docker-compose.yml
+# Keycloak'ı Docker ile çalıştırır. Başlatma: docker compose up -d
+
+services:
+  keycloak:
+    # Hangi image: quay.io Keycloak'ın resmi deposu. Sürümü sabitliyoruz,
+    # "latest" yazarsak bir gün kendi kendine güncellenip bozulabilir.
+    image: quay.io/keycloak/keycloak:26.0.7
+
+    # start-dev: geliştirme modu (HTTP ile çalışır, kendi içinde basit bir veritabanı kullanır).
+    # Gerçek sunucuda "start" kullanılır, HTTPS ve ayrı veritabanı ister.
+    command: start-dev
+
+    # İlk yönetici hesabı. Şifreyi buraya yazmıyoruz, .env dosyasından okuyoruz,
+    # çünkü bu dosya GitHub'a gidecek ve repo public.
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_SIFRE}
+
+    # "bilgisayar:container". Tarayıcıda localhost:8080 → container'ın içindeki 8080
+    ports:
+      - "8080:8080"
+
+    # Keycloak ayarlarını (realm, kullanıcı, rol) container silinse bile sakla
+    volumes:
+      - keycloak_veri:/opt/keycloak/data
+
+# Docker'ın yönettiği adlandırılmış depolama alanı
+volumes:
+  keycloak_veri:

@@ -35,4 +35,13 @@ return [
         ],
     ],
 
+    // Keycloak ayarları: değerler panel/.env'den gelir (secret koda yazılmaz)
+    'keycloak' => [
+        'client_id' => env('KEYCLOAK_CLIENT_ID'),
+        'client_secret' => env('KEYCLOAK_CLIENT_SECRET'),
+        'redirect' => env('KEYCLOAK_REDIRECT_URI'),
+        'base_url' => env('KEYCLOAK_BASE_URL'),   // Keycloak'ın adresi (localhost:8080)
+        'realms' => env('KEYCLOAK_REALM'),        // Hangi realm (supheli-giris)
+    ],
+
 ];
