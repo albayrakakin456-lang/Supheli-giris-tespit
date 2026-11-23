@@ -15,7 +15,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         // Rotalarda ->middleware('rol:yonetici') diye kullanabilmek için kısa ad
         $middleware->alias([
-            'rol' => \App\Http\Middleware\KeycloakRol::class,
+            'rol' => \App\Http\Middleware\KeycloakRol::class,           // Panel: oturuma bakar
+            'api.rol' => \App\Http\Middleware\KeycloakToken::class,     // API: Bearer token'ı doğrular
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
